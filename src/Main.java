@@ -23,6 +23,7 @@ public class Main {
                 p1.equipo2 = linea[4];
 
                 boolean bandera = false;
+
                 for (int j = 0; j < rondas.size(); j++) {
                     if (rondas.get(j).numero.equals(linea[0])) {
                         rondas.get(j).partidos.add(p1);
@@ -82,8 +83,5 @@ public class Main {
             }
             System.out.println("Gano " + suma + " " + pronosticos.get(j).persona);
         }
-
-
     }
-
 }
