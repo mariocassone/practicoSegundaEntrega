@@ -2,9 +2,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ronda {
-    String numero;
+    String nombreRonda;
     String resultado;
     List<Partido> partidos;
+    String fase;
+    Ronda ronda;
+
+    public Ronda(Ronda ronda, String resultado, List<Partido> partidos, String fase) {
+        this.nombreRonda = ronda.nombreRonda;
+        this.resultado = resultado;
+        this.partidos = partidos;
+        this.fase = fase;
+    }
 
     public Ronda() {
         partidos = new ArrayList<>();
