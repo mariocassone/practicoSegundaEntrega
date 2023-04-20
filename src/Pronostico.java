@@ -1,3 +1,5 @@
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,52 +10,48 @@ public class Pronostico {
     List<Partido> partidos;
     int puntosExtras;
 
-    public Pronostico(String persona){
+    public Pronostico(String persona) {
         this.persona = persona;
         partidos = new ArrayList<>();
     }
 
 
     public int puntos(List<Partido> resultados) {
-        int puntos = 0;
-        int contadorRonda = 0;
-            for (int i = 0; i < resultados.size(); i++) {
+
+            int puntos = 0;
+            int puntosModif = 0;
+
+                for (int i = 0; i < resultados.size(); i++) {
+                    for (int j = 0; j < partidos.size(); j++)
+                        if (resultados.get(i).equipo1.equals(partidos.get(j).equipo1)
+                                && resultados.get(i).equipo2.equals(partidos.get(j).equipo2)) {
+                            if (partidos.get(j).prediccion == resultados.get(i).resultadoPartido()) {
+                                puntos = puntos + 1;
+                            }
+                        }
+                }return puntos;
+                }
+
+
+    public int contarRondas(List<Partido> rondas) {
+        int cRonda = 0;
+        for (int i = 0; i < rondas.size(); i++) {
             for (int j = 0; j < partidos.size(); j++) {
-                if(resultados.get(i).nomRonda.equals(partidos.get(j).nomRonda)){
-                    if(resultados.get(i).equipo1.equals(partidos.get(j).equipo1)
-                        && resultados.get(i).equipo2.equals(partidos.get(j).equipo2)) {
-                    if (partidos.get(j).prediccion == resultados.get(i).resultadoPartido()) {
-                        puntos = puntos + 1;
-                        contadorRonda += contadorRonda;
+                if(rondas.get(i).nomRonda.equals(partidos.get(j).nomRonda)){
+                    if(rondas.get(i).equipo1.equals(partidos.get(j).equipo1)
+                            && rondas.get(i).equipo2.equals(partidos.get(j).equipo2)) {
+                        if (partidos.get(j).prediccion == rondas.get(i).resultadoPartido()) {
+                            cRonda += 1;
+                        }
                     }
                 }
             }
-            }
 
-        }return puntos;
-        }
-
-    public int contadorRondas(List<Partido> resultados) {
-        int contadorRondas = 0;
-        Set<String> rondasAcertadas = new HashSet<String>();
-        for (Partido resultado : resultados) {
-            boolean acertadosTodos = true;
-            for (Partido partido : partidos) {
-                if (resultado.nomRonda.equals(partido.nomRonda)
-                        && resultado.equipo1.equals(partido.equipo1)
-                        && resultado.equipo2.equals(partido.equipo2)) {
-                    if (partido.prediccion != resultado.resultadoPartido()) {
-                        acertadosTodos = false;
-                    }
-                }
-            }
-            if (acertadosTodos && !rondasAcertadas.contains(resultado.nomRonda)) {
-                rondasAcertadas.add(resultado.nomRonda);
-                contadorRondas++;
-            }
-        }
-        return contadorRondas;
+        }return cRonda;
     }
+
+
+
 
 }
 

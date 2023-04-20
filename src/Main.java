@@ -19,8 +19,8 @@ public class Main {
                 String[] linea = resultados.get(i);
 
                 Partido p1 = new Partido();
-                p1.fase = linea[0];
-                p1.nomRonda = linea[1];
+                p1.fase = linea[1];
+                p1.nomRonda = linea[0];
                 p1.equipo1 = linea[2];
                 p1.golesEquipo1 = Integer.parseInt(linea[4]);
                 p1.golesEquipo2 = Integer.parseInt(linea[5]);
@@ -91,16 +91,32 @@ public class Main {
             System.out.println("Error leer pronosticos");
         }
 
+        int puntoPorGanar = 0;
+        int puntosPorRonda = 0;
+
+        try{
+            for(String linea : Files.readAllLines(Paths.get("src/puntosExtras"))){
+                if(linea != null){
+                    String[] datos = linea.split(";");
+                    puntoPorGanar = Integer.parseInt(datos[0]);
+                    puntosPorRonda = Integer.parseInt(datos[1]);
+                }
+            }
+
+        } catch(Exception e){
+            System.out.println("Error de lectura archivo");
+        }
+
+
         for (int j = 0; j < pronosticos.size(); j++) {
             int suma = 0;
             int total = 0;
             for (int k = 0; k < rondas.size(); k++) {
-                suma = suma + pronosticos.get(j).puntos(rondas.get(k).partidos);
-                total = total + pronosticos.get(j).contadorRondas(rondas.get(k).partidos);
-
-            }
-            System.out.println(pronosticos.get(j).persona + ": " + suma + " puntos. - ");
-            System.out.println("El total de rondas acertadas fue de: " + total + " " + pronosticos.get(j).persona);
+                suma = suma + (puntoPorGanar * pronosticos.get(j).puntos(rondas.get(k).partidos));
+                total = total + (puntosPorRonda * pronosticos.get(j).contarRondas(rondas.get(k).partidos) * puntosPorRonda);
+}
+            System.out.println(pronosticos.get(j).persona + ": " + suma  + " puntos totales. - ");
+            System.out.println("El total de rondas acertadas fue de: " + total  + " " + pronosticos.get(j).persona);
         }
 
 
