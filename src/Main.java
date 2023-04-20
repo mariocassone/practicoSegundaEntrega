@@ -104,17 +104,16 @@ public class Main {
         for (int j = 0; j < pronosticos.size(); j++) {
             int suma = 0;
             int total = 0;
+            int totalTotal = 0;
             for (int k = 0; k < rondas.size(); k++) {
                 suma = suma + (puntoPorGanar * pronosticos.get(j).puntos(rondas.get(k).partidos));
                 total = total + (puntosPorRonda * pronosticos.get(j).contarRondas(rondas.get(k).partidos));
+                totalTotal = suma + total;
 }
-            System.out.println(pronosticos.get(j).persona + ": " + suma  + " puntos totales. - ");
-            System.out.println("El total de rondas acertadas fue de: " + total  + " " + pronosticos.get(j).persona);
+            System.out.println(pronosticos.get(j).persona + ": " + suma  + " puntos por partidos acertados.");
+            System.out.println(pronosticos.get(j).persona + " " + "puntos obtenidos por rondas acertadas fue de: " + total);
+            System.out.println("El total de puntos ganados por " + pronosticos.get(j).persona + " es de:" + " "  + totalTotal + ".");
         }
-
-
-
-
 
 
 
