@@ -49,13 +49,6 @@ public class Main {
 
         List<Pronostico> pronosticos = new ArrayList<>();
 
-
-
-
-
-
-
-
         try {
            // List<String> archivo = Files.readAllLines(Paths.get("src/Pronostico"));
             List<String[]> listaPronos = leerPronosticos();
@@ -113,7 +106,7 @@ public class Main {
             int total = 0;
             for (int k = 0; k < rondas.size(); k++) {
                 suma = suma + (puntoPorGanar * pronosticos.get(j).puntos(rondas.get(k).partidos));
-                total = total + (puntosPorRonda * pronosticos.get(j).contarRondas(rondas.get(k).partidos) * puntosPorRonda);
+                total = total + (puntosPorRonda * pronosticos.get(j).contarRondas(rondas.get(k).partidos));
 }
             System.out.println(pronosticos.get(j).persona + ": " + suma  + " puntos totales. - ");
             System.out.println("El total de rondas acertadas fue de: " + total  + " " + pronosticos.get(j).persona);
