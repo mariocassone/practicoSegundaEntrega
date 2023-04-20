@@ -111,7 +111,7 @@ public class Main {
                 totalTotal = suma + total;
 }
             System.out.println(pronosticos.get(j).persona + ": " + suma  + " puntos por partidos acertados.");
-            System.out.println(pronosticos.get(j).persona + " " + "puntos obtenidos por rondas acertadas fue de: " + total);
+            System.out.println(pronosticos.get(j).persona + " " + "puntos obtenidos por rondas acertadas fue de: " + total + ".");
             System.out.println("El total de puntos ganados por " + pronosticos.get(j).persona + " es de:" + " "  + totalTotal + ".");
         }
 
