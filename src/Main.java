@@ -101,23 +101,27 @@ public class Main {
 
 
         for (int j = 0; j < pronosticos.size(); j++) {
+            int aciertos = 0;
             int suma = 0;
             int total = 0;
             int totalTotal = 0;
             int rondasAcertadas = 0;
-//            int acertadas = 0;
+
 
             for (int k = 0; k < rondas.size(); k++) {
                 int acertadas = pronosticos.get(j).puntos(rondas.get(k).partidos);
                 if (acertadas == rondas.get(k).partidos.size()) {
                     rondasAcertadas += 1;
                 }
+                aciertos = aciertos + pronosticos.get(j).puntos(rondas.get(k).partidos);
                 suma = suma + (puntoPorGanar * pronosticos.get(j).puntos(rondas.get(k).partidos));
                 total = total + (puntosPorRonda * rondasAcertadas);
                 totalTotal = suma + total;
             }
+            System.out.println(pronosticos.get(j).persona + ": " + aciertos + " aciertos.");
             System.out.println(pronosticos.get(j).persona + ": " + suma + " puntos por aciertos.");
-            System.out.println(pronosticos.get(j).persona + ": " +  total + " puntos por rondas.");
+            System.out.println(pronosticos.get(j).persona + ": " + rondasAcertadas + " rondas acertadas.");
+            System.out.println(pronosticos.get(j).persona + ": " + total + " puntos por rondas.");
             System.out.println(pronosticos.get(j).persona + ": " + totalTotal + " puntos totales.\n");
 
         }
@@ -158,9 +162,7 @@ public class Main {
 
         try {
             // Creamos la conexión
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://sql10.freemysqlhosting.net:3306/sql10612293",
-                    "sql10612293", "ACwUKDKvbY");
+            Connection con = DriverManager.getConnection("jdbc:mysql://sql10.freemysqlhosting.net:3306/sql10612293", "sql10612293", "ACwUKDKvbY");
             Statement stmt = con.createStatement();
 
             // El Query que vamos a correr
@@ -202,9 +204,7 @@ public class Main {
 
         try {
             // Creamos la conexión
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://sql10.freemysqlhosting.net:3306/sql10612293",
-                    "sql10612293", "ACwUKDKvbY");
+            Connection con = DriverManager.getConnection("jdbc:mysql://sql10.freemysqlhosting.net:3306/sql10612293", "sql10612293", "ACwUKDKvbY");
             Statement stmt = con.createStatement();
 
             // El Query que vamos a correr
