@@ -12,15 +12,15 @@ public class Main {
         List<Ronda> rondas = new ArrayList<>();
 
         try {
-          // List<String> archivo = Files.readAllLines(Paths.get("src/Resultado"));
+            // List<String> archivo = Files.readAllLines(Paths.get("src/Resultado"));
             List<String[]> resultados = leerResultados();
-            
+
             for (int i = 0; i < resultados.size(); i++) {
                 String[] linea = resultados.get(i);
 
                 Partido p1 = new Partido();
-                p1.fase = linea[1];
-                p1.nomRonda = linea[0];
+                p1.fase = linea[0];
+                p1.nomRonda = linea[1];
                 p1.equipo1 = linea[2];
                 p1.golesEquipo1 = Integer.parseInt(linea[4]);
                 p1.golesEquipo2 = Integer.parseInt(linea[5]);
@@ -29,14 +29,14 @@ public class Main {
                 boolean bandera = false;
 
                 for (int j = 0; j < rondas.size(); j++) {
-                    if (rondas.get(j).nombreRonda.equals(linea[0])) {
+                    if (rondas.get(j).nombreRonda.equals(linea[1])) {
                         rondas.get(j).partidos.add(p1);
                         bandera = true;
                     }
                 }
                 if (!bandera) {
                     Ronda ronda = new Ronda();
-                    ronda.nombreRonda = linea[0];
+                    ronda.nombreRonda = linea[1];
                     ronda.partidos.add(p1);
                     rondas.add(ronda);
                 }
@@ -50,9 +50,8 @@ public class Main {
         List<Pronostico> pronosticos = new ArrayList<>();
 
         try {
-           // List<String> archivo = Files.readAllLines(Paths.get("src/Pronostico"));
+            // List<String> archivo = Files.readAllLines(Paths.get("src/Pronostico"));
             List<String[]> listaPronos = leerPronosticos();
-
 
 
             for (int i = 0; i < listaPronos.size(); i++) {
@@ -87,16 +86,16 @@ public class Main {
         int puntoPorGanar = 0;
         int puntosPorRonda = 0;
 
-        try{
-            for(String linea : Files.readAllLines(Paths.get("src/puntosExtras"))){
-                if(linea != null){
+        try {
+            for (String linea : Files.readAllLines(Paths.get("src/puntosExtras"))) {
+                if (linea != null) {
                     String[] datos = linea.split(";");
                     puntoPorGanar = Integer.parseInt(datos[0]);
                     puntosPorRonda = Integer.parseInt(datos[1]);
                 }
             }
 
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error de lectura archivo");
         }
 
@@ -105,16 +104,23 @@ public class Main {
             int suma = 0;
             int total = 0;
             int totalTotal = 0;
-            for (int k = 0; k < rondas.size(); k++) {
-                suma = suma + (puntoPorGanar * pronosticos.get(j).puntos(rondas.get(k).partidos));
-                total = total + (puntosPorRonda * pronosticos.get(j).contarRondas(rondas.get(k).partidos));
-                totalTotal = suma + total;
-}
-            System.out.println(pronosticos.get(j).persona + ": " + suma  + " puntos por partidos acertados.");
-            System.out.println(pronosticos.get(j).persona + " " + "puntos obtenidos por rondas acertadas fue de: " + total + ".");
-            System.out.println("El total de puntos ganados por " + pronosticos.get(j).persona + " es de:" + " "  + totalTotal + ".");
-        }
+            int rondasAcertadas = 0;
+//            int acertadas = 0;
 
+            for (int k = 0; k < rondas.size(); k++) {
+                int acertadas = pronosticos.get(j).puntos(rondas.get(k).partidos);
+                if (acertadas == rondas.get(k).partidos.size()) {
+                    rondasAcertadas += 1;
+                }
+                suma = suma + (puntoPorGanar * pronosticos.get(j).puntos(rondas.get(k).partidos));
+                total = total + (puntosPorRonda * rondasAcertadas);
+                totalTotal = suma + total;
+            }
+            System.out.println(pronosticos.get(j).persona + ": " + suma + " puntos por aciertos.");
+            System.out.println(pronosticos.get(j).persona + ": " +  total + " puntos por rondas.");
+            System.out.println(pronosticos.get(j).persona + ": " + totalTotal + " puntos totales.\n");
+
+        }
 
 
         List<String[]> resultados = leerResultados();
@@ -131,7 +137,6 @@ public class Main {
 //        }
 
     }
-
 
 
     // Va a devolver una Lista con un arreglo de String que va a contener:
